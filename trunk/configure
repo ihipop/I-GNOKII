@@ -2591,7 +2591,7 @@ GNOKII_LT_VERSION_AGE=1
 
 XVERSION=1.0
 
-SVERSION=1.4.5
+SVERSION=1.4.5-p1
 
 ac_aux_dir=
 for ac_dir in "$srcdir" "$srcdir/.." "$srcdir/../.."; do

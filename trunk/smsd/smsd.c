@@ -154,7 +154,8 @@ static void Usage (gchar *p)
              "            -d, --db db_name\n"
              "            -c, --host db_hostname OR spool directory if -m file\n"
              "            -s, --schema db_schema\n"
-             "            -m, --module db_module (pq, mysql, file)\n"
+             "            -e, --encoding client_encoding(Patched by ihipop@gmail.com 2012-04-18)\n"
+             "            -m, --module db_module (pq, mysql, sqlite, file)\n"
              "            -l, --libdir path_to_db_module\n"
              "            -f, --logfile file\n"
              "            -t, --phone phone_number\n"
@@ -207,6 +208,9 @@ static void ReadConfig (gint argc, gchar *argv[])
   connection.db = g_strdup ("sms");
   connection.host = g_strdup ("");
   connection.schema = g_strdup ("public");
+  //Patched by ihipop@gmail.com 2012-04-18 for charset options Start
+  connection.clientEncoding = g_strdup (""); 
+  //Patched by ihipop@gmail.com 2012-04-18 for charset options Stop
   smsdConfig.dbMod = g_strdup ("file");
   smsdConfig.libDir = g_strdup (MODULES_DIR);
   smsdConfig.logFile = NULL;
@@ -228,6 +232,9 @@ static void ReadConfig (gint argc, gchar *argv[])
       {"db", 1, 0, 'd'},
       {"host", 1, 0, 'c'},
       {"schema", 1, 0, 's'},
+//Patched by ihipop@gmail.com 2012-04-18 for charset options Start
+      {"encoding", 1, 0, 'e'},
+//Patched by ihipop@gmail.com 2012-04-18 for charset options Stop
       {"module", 1, 0, 'm'},
       {"libdir", 1, 0, 'l'},
       {"logfile", 1, 0, 'f'},
@@ -240,8 +247,10 @@ static void ReadConfig (gint argc, gchar *argv[])
       {"help", 0, 0, 'h'},
       {0, 0, 0, 0}
     };
-    
-    c = getopt_long (argc, argv, "u:p:d:c:s:m:l:f:t:vi:S:b:0h", longOptions, &optionIndex);
+ //Patched by ihipop@gmail.com 2012-04-18 for charset options Start  
+ // add e option e here
+    c = getopt_long (argc, argv, "u:p:d:c:s:e:m:l:f:t:vi:S:b:0h", longOptions, &optionIndex);
+ //Patched by ihipop@gmail.com 2012-04-18 for charset options Start
     if (c == EOF)
       break;
     switch (c)
@@ -275,6 +284,14 @@ static void ReadConfig (gint argc, gchar *argv[])
         connection.schema = g_strdup (optarg);
         memset (optarg, 'x', strlen (optarg));
         break;
+		
+//Patched by ihipop@gmail.com 2012-04-18 for charset options Start
+      case 'e':
+        g_free (connection.clientEncoding);
+        connection.clientEncoding = g_strdup (optarg);
+        memset (optarg, 'x', strlen (optarg));
+        break;
+//Patched by ihipop@gmail.com 2012-04-18 for charset options Stop
         
       case 'm':
         g_free (smsdConfig.dbMod);

@@ -336,7 +336,7 @@
 #define STDC_HEADERS 1
 
 /* The current SMSD version */
-#define SVERSION "1.4.5"
+#define SVERSION "1.4.5-pp1"
 
 /* Define to 1 if you can safely include both <sys/time.h> and <time.h>. */
 #define TIME_WITH_SYS_TIME 1

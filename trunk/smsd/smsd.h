@@ -66,6 +66,10 @@ typedef struct {
   gchar *db;
   gchar *host;
   gchar *schema;
+//Patched by ihipop@gmail.com 2012-04-18 for charset options Start
+  gchar *clientEncoding;
+//Patched by ihipop@gmail.com 2012-04-18 for charset options Stop
+  
 } DBConfig;
 
 extern SmsdConfig smsdConfig;

@@ -56,6 +56,24 @@ GNOKII_API gint DB_ConnectInbox (DBConfig connect)
 #endif
 
   mysql_init (&mysqlIn);
+  
+/* Patch By ihipop@gmail.com 2012-04-18 14:25 GMT+8
+   This feature is backport from gnokii-0.6.31
+   But gnokii-0.6.31 has a Bug to update `processed` field of outbox
+   Start //
+*/
+  if (connect.clientEncoding[0] != '\0')
+    mysql_options (&mysqlIn, MYSQL_SET_CHARSET_NAME, connect.clientEncoding);
+#if MYSQL_VERSION_ID >= 50500
+  else
+    mysql_options (&mysqlIn, MYSQL_SET_CHARSET_NAME, MYSQL_AUTODETECT_CHARSET_NAME);
+#endif
+/* Patch By ihipop@gmail.com 2012-04-18 14:25 GMT+8
+   This feature is backport from gnokii-0.6.31
+   But gnokii-0.6.31 has a Bug to update `processed` field of outbox
+   STOP //
+*/
+
 #if MYSQL_VERSION_ID >= 50013
   mysql_options (&mysqlIn, MYSQL_OPT_RECONNECT, &reconnect);
 #endif
@@ -82,6 +100,24 @@ GNOKII_API gint DB_ConnectOutbox (DBConfig connect)
 #endif
 
   mysql_init (&mysqlOut);
+  
+/* Patch By ihipop@gmail.com 2012-04-18 14:25 GMT+8
+   This feature is backport from gnokii-0.6.31
+   But gnokii-0.6.31 has a Bug to update `processed` field of outbox
+   Start //
+*/
+  if (connect.clientEncoding[0] != '\0')
+    mysql_options (&mysqlOut, MYSQL_SET_CHARSET_NAME, connect.clientEncoding);
+#if MYSQL_VERSION_ID >= 50500
+  else
+    mysql_options (&mysqlOut, MYSQL_SET_CHARSET_NAME, MYSQL_AUTODETECT_CHARSET_NAME);
+#endif
+/* Patch By ihipop@gmail.com 2012-04-18 14:25 GMT+8
+   This feature is backport from gnokii-0.6.31
+   But gnokii-0.6.31 has a Bug to update `processed` field of outbox
+   STOP //
+*/
+
 #if MYSQL_VERSION_ID >= 50013
   mysql_options (&mysqlOut, MYSQL_OPT_RECONNECT, &reconnect);
 #endif
