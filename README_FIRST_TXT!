@@ -1,0 +1,14 @@
+Release Log By ihipop@gmail.com
+http://ihipop.info
+
+Important:
+if you have "ucs2_encode/iconv: Invalid or incomplete multibyte or wide character" error or
+if you have encoding problems
+check if you have a vaild locale env.
+For example if you're useing LANG=zh_CN.UTF-8 for database
+------------------------------------------------------------------------
+2012/4/18 15:52
+Add options for mysql charset 
+this is tested and work on debian squeeze~
+This feature is backport from gnokii-0.6.31
+But gnokii-0.6.31 has a Bug to update `processed` field of outbox
