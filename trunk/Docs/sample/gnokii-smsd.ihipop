@@ -1,0 +1,43 @@
+#!/bin/bash
+# by ihipop@Gmail.com http://ihipop.info
+# Example:
+#  SMSD_OPTS="--user smsd --db smsd --host 127.0.0.1 --module pq"
+#
+export LC_ALL=zh_CN.UTF-8
+
+exec="/usr/sbin/smsd"
+exec="/usr/local/bin/smsd"
+port=3306
+
+SMSD_OPTS="-i 3 -u smsd -p YOUR.PASSWORD -d smsd -c 127.0.0.1 -m mysql -e utf8"
+
+
+#
+# Log file location.  If you adjust this, see also /etc/logrotate.d/gnokii-smsd
+#
+
+SMSD_LOG="/var/log/gnokii/gnokii-smsd"
+
+
+[ -n "$SMSD_OPTS" ] || exit 0
+[ -z "$SMSD_LOG"  ] || SMSD_OPTS="$SMSD_OPTS --logfile "${SMSD_LOG}
+
+
+
+
+count=1
+
+while [ 1 ]
+do
+	while [ "`lsof -i :${port}`" = '' ] ; do
+		echo waiting the ${port} port to come up~;
+		sleep 3;
+	done
+echo "${port} port come up~ (re)Launching the smsd. At ${count} times"
+
+[ `pidof smsd` ] && echo SMSD already running~ Quiting~ && exit 1
+
+$exec $SMSD_OPTS
+((count=$count+1))
+beep -f 1000 -n -f 2000 -n -f 1500 -r 3
+done
